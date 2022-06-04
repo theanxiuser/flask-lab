@@ -1,0 +1,7 @@
+# virtual environment added to gitignore
+venv/
+
+# Ignore .idea
+.idea/
+
+__pycache__/
