@@ -2,13 +2,14 @@
 
 from flask import Flask
 from markupsafe import escape
+from flask import url_for
 
 # A minimal application
 app = Flask(__name__)
 
-@app.route("/")
-def index():
-    return "Index Page"
+# @app.route("/")
+# def index():
+#     return "Index Page"
 
 @app.route("/hello")
 def hello_world():
@@ -20,10 +21,10 @@ def hello(name):
     return f"Hello, {escape(name)}!"
 
 # Variable rules
-@app.route("/user/<username>")
-def show_user_profile(username):
-    # show the user profile for that user
-    return f"User {escape(username)}"
+# @app.route("/user/<username>")
+# def show_user_profile(username):
+#     # show the user profile for that user
+#     return f"User {escape(username)}"
 
 @app.route("/post/<int:post_id>")
 def show_post(post_id):
@@ -43,3 +44,22 @@ def projects():
 @app.route("/about")
 def about():
     return "This is about page"
+
+# URL building
+@app.route("/")
+def index():
+    return "index"
+
+@app.route("/login")
+def login():
+    return "login"
+
+@app.route("/user/<username>")
+def profile(username):
+    return f"{username}\'s profile"
+
+with app.test_request_context():
+    print(url_for("index"))
+    print(url_for("login"))
+    print(url_for("login", next="/"))
+    print(url_for("profile", username="Bishal Poudel"))
