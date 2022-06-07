@@ -4,6 +4,7 @@ from flask import Flask
 from markupsafe import escape
 from flask import url_for
 from flask import request
+from flask import render_template
 
 # A minimal application
 app = Flask(__name__)
@@ -12,14 +13,14 @@ app = Flask(__name__)
 # def index():
 #     return "Index Page"
 
-@app.route("/hello")
-def hello_world():
-    return "Hello World!"
-
-# HTML escaping
-@app.route("/<name>")
-def hello(name):
-    return f"Hello, {escape(name)}!"
+# @app.route("/hello")
+# def hello_world():
+#     return "Hello World!"
+#
+# # HTML escaping
+# @app.route("/<name>")
+# def hello(name):
+#     return f"Hello, {escape(name)}!"
 
 # Variable rules
 # @app.route("/user/<username>")
@@ -72,3 +73,12 @@ def login():
         return do_the_login()
     else:
         return show_the_login_form()
+
+# # static files
+# url_for("static", filename="style.css")
+
+# rendering templates
+@app.route("/hello")
+@app.route("/hello/<name>")
+def hello(name=None):
+    return render_template("hello.html", name=name)
