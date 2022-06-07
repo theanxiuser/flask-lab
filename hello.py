@@ -5,6 +5,7 @@ from markupsafe import escape
 from flask import url_for
 from flask import request
 from flask import render_template
+from werkzeug.utils import secure_filename
 
 # A minimal application
 app = Flask(__name__)
@@ -100,3 +101,10 @@ def login():
             error = "Invalid username/password"
     # execute if request method was GET or credentials were invalid
     return render_template("login.html", error=error)
+
+# file upload
+@app.route("/upload", methods=["GET", "POST"])
+def upload_file():
+    if request.method == "POST":
+        file = request.files["the_file"]
+        file.save(f"/var/www/uploads/{secure_filename(file.filename)}")
