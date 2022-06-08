@@ -6,6 +6,7 @@ from flask import url_for
 from flask import request
 from flask import render_template
 from werkzeug.utils import secure_filename
+from flask import make_response
 
 # A minimal application
 app = Flask(__name__)
@@ -48,10 +49,10 @@ def projects():
 def about():
     return "This is about page"
 
-# URL building
-@app.route("/")
-def index():
-    return "index"
+# # URL building
+# @app.route("/")
+# def index():
+#     return "index"
 
 # @app.route("/login")
 # def login():
@@ -62,7 +63,7 @@ def profile(username):
     return f"{username}\'s profile"
 
 with app.test_request_context():
-    print(url_for("index"))
+    # print(url_for("index"))
     # print(url_for("login"))
     # print(url_for("login", next="/"))
     print(url_for("profile", username="Bishal Poudel"))
@@ -108,3 +109,16 @@ def upload_file():
     if request.method == "POST":
         file = request.files["the_file"]
         file.save(f"/var/www/uploads/{secure_filename(file.filename)}")
+
+# cookies
+# # reading cookies
+# @app.route("/")
+# def index():
+#     username = request.cookies.get("username")
+
+# storing cookies
+@app.route("/")
+def index():
+    resp = make_response(render_template(...))
+    resp.set_cookie("username", "the username")
+    return resp
